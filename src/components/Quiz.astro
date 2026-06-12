@@ -1,54 +1,43 @@
 ---
-import { soalDatabase } from '../data/Soal';
-import crypto from 'node:crypto';
-
 const SALT = "tinkers_sec_2026_salt";
-
-// Map the questions to remove plain text answers and replace with secure SHA-256 hashes
-const safeSoalDatabase = soalDatabase.map(q => {
-  const hash = crypto
-    .createHash('sha256')
-    .update(`${q.id}-${q.answer}-${SALT}`)
-    .digest('hex');
-    
-  return {
-    id: q.id,
-    category: q.category,
-    question: q.question,
-    options: q.options,
-    answerHash: hash
-  };
-});
 ---
 
 <div id="hyper-container" class="min-h-screen bg-[#090d16] text-slate-100 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
     
-    <!-- Ambient Aurora Glows -->
-    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-        <div class="absolute -top-[40%] -left-[20%] w-[80%] h-[80%] rounded-full bg-indigo-500/10 blur-[150px] animate-pulse"></div>
-        <div class="absolute -bottom-[40%] -right-[20%] w-[80%] h-[80%] rounded-full bg-violet-500/10 blur-[150px] animate-pulse delay-1000"></div>
+    <!-- Blueprint Schematic Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none opacity-20">
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:8px_8px] opacity-40"></div>
+        
+        <!-- Schematic Accents -->
+        <div class="absolute top-10 left-10 w-32 h-32 border-l border-t border-indigo-500/30"></div>
+        <div class="absolute bottom-10 right-10 w-32 h-32 border-r border-b border-indigo-500/30"></div>
     </div>
 
     <!-- Main Container -->
     <div id="main-frame" class="min-h-screen flex items-center justify-center p-4 md:p-8 relative z-10 w-full max-w-6xl mx-auto">
         
         <!-- Intro Screen -->
-        <div id="intro-card" class="w-full max-w-xl bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-8 md:p-12 rounded-3xl shadow-2xl transition-all duration-500">
+        <div id="intro-card" class="w-full max-w-xl bg-slate-900/40 backdrop-blur-xl border-2 border-indigo-500/20 p-8 md:p-12 rounded-none shadow-2xl transition-all duration-500 relative">
+            <!-- Blueprint Corner Notches -->
+            <div class="absolute -top-1 -left-1 w-4 h-4 border-l-2 border-t-2 border-indigo-500"></div>
+            <div class="absolute -bottom-1 -right-1 w-4 h-4 border-r-2 border-b-2 border-indigo-500"></div>
+            
             <div class="text-center">
-                <img src="/the_tinkers.png" class="w-24 h-24 mx-auto mb-6 object-contain invert opacity-90" />
+                <img src="/the_tinkers.png" class="w-24 h-24 mx-auto mb-6 object-contain opacity-90" />
                 <h1 class="text-3xl font-extrabold text-white tracking-tight mb-2">KUIS SELEKSI</h1>
                 <p class="text-indigo-400 font-semibold tracking-wider uppercase text-sm mb-6">The Tinkers - Batch 2</p>
                 <div class="w-16 h-1 bg-indigo-500 mx-auto rounded-full mb-8"></div>
             </div>
             
             <div class="space-y-6">
-                <div>
-                    <label for="user-name" class="block text-xs font-semibold uppercase text-slate-400 tracking-wider mb-2">Nama Lengkap Peserta</label>
+                <div class="text-center">
+                    <label for="user-name" class="block text-xs font-semibold uppercase text-slate-400 tracking-wider mb-3">Identitas Kandidat</label>
                     <input 
                         type="text" 
                         id="user-name" 
-                        placeholder="Masukkan nama Anda..." 
-                        class="w-full bg-slate-950/80 border border-slate-800 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 rounded-2xl px-5 py-4 text-white text-lg font-medium transition-all placeholder:text-slate-600 outline-none"
+                        placeholder="MASUKKAN NAMA..." 
+                        class="w-full bg-slate-950/40 border-2 border-dashed border-indigo-500/30 focus:border-indigo-500 focus:ring-0 rounded-none px-5 py-4 text-white text-2xl font-black transition-all placeholder:text-slate-700 outline-none text-center tracking-tighter uppercase font-mono"
                     />
                 </div>
                 
@@ -69,45 +58,46 @@ const safeSoalDatabase = soalDatabase.map(q => {
             
             <!-- Left Panel: Profile & Category Progress -->
             <div class="col-span-12 lg:col-span-4 space-y-6">
-                <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-6 rounded-2xl shadow-xl">
+                <div class="bg-slate-900/40 backdrop-blur-xl border-2 border-indigo-500/20 p-6 rounded-none shadow-xl relative">
+                    <div class="absolute top-0 right-0 w-8 h-8 border-r border-t border-indigo-500/30"></div>
                     <div class="flex items-center space-x-4 mb-6">
                         <div class="w-14 h-14 bg-indigo-500/10 border border-indigo-500/20 rounded-2xl flex items-center justify-center">
-                            <img id="mascot-img" src="/the_tinkers.png" class="w-8 h-8 object-contain invert opacity-95" />
+                            <img id="mascot-img" src="/the_tinkers.png" class="w-8 h-8 object-contain opacity-95" />
                         </div>
                         <div>
-                            <span class="text-xs text-slate-400 font-semibold tracking-wider uppercase">Peserta</span>
-                            <h2 id="operator-label" class="text-lg font-bold text-white leading-tight truncate">CANDIDATE</h2>
+                            <span class="text-xs text-slate-400 font-semibold tracking-wider uppercase">Kandidat</span>
+                            <h2 id="operator-label" class="text-lg font-bold text-white leading-tight truncate">KANDIDAT</h2>
                         </div>
                     </div>
 
                     <div class="space-y-4">
                         <div class="flex justify-between text-xs font-semibold text-slate-400 tracking-wider">
-                            <span>PROGRES KESELURUHAN</span>
-                            <span id="progress-percent">0%</span>
+                            <span>SOAL TERJAWAB</span>
+                            <span id="progress-percent">0 / 50 (0%)</span>
                         </div>
                         <div class="h-2 w-full bg-slate-950 rounded-full overflow-hidden">
                             <div id="progress-bar" class="h-full bg-gradient-to-r from-indigo-500 to-violet-500 w-0 transition-all duration-500 rounded-full"></div>
                         </div>
-                    </div>
-                </div>
 
-                <!-- Category Breakdown Stats -->
-                <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-6 rounded-2xl shadow-xl">
-                    <h3 class="text-xs font-bold text-slate-400 tracking-wider uppercase mb-4">Kategori Kompetensi</h3>
-                    <div class="space-y-4" id="categories-stat">
-                        <!-- Stat items will be injected here dynamically -->
+                        <div class="h-[1px] w-full bg-slate-800/60 my-1"></div>
+
+                        <div class="flex justify-between items-center text-xs font-semibold text-slate-400 tracking-wider">
+                            <span>SISA WAKTU</span>
+                            <span id="countdown-timer" class="font-bold text-white bg-slate-950 px-3 py-1 rounded-lg text-sm transition-all duration-300">60:00</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Right Panel: Questions and Options -->
             <div class="col-span-12 lg:col-span-8 space-y-6">
-                <div class="bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-8 md:p-12 rounded-3xl shadow-xl min-h-[420px] flex flex-col justify-between relative overflow-hidden">
+                <div class="bg-slate-900/40 backdrop-blur-xl border-2 border-indigo-500/20 p-8 md:p-12 rounded-none shadow-xl min-h-[420px] flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-indigo-500/20"></div>
                     <div>
                         <!-- Category Badge & Index -->
                         <div class="flex justify-between items-center mb-8">
-                            <span id="cat-badge" class="px-4 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-full text-indigo-400 text-xs font-bold tracking-wider uppercase">KATEGORI</span>
-                            <span class="text-slate-500 text-sm font-semibold">Soal <span id="current-num" class="text-white font-bold">01</span> / 50</span>
+                            <span id="cat-badge" class="px-4 py-1.5 bg-indigo-500/10 border border-indigo-500/20 rounded-none text-indigo-400 text-xs font-bold tracking-wider uppercase font-mono">KATEGORI</span>
+                            <span class="text-slate-500 text-sm font-semibold font-mono">DOC_ID: <span id="current-num" class="text-white font-bold">01</span> / 50</span>
                         </div>
 
                         <!-- Question Text -->
@@ -123,59 +113,61 @@ const safeSoalDatabase = soalDatabase.map(q => {
                 </div>
 
                 <!-- Navigation Controls -->
-                <div class="flex justify-between items-center bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-4 rounded-2xl shadow-xl">
-                    <button id="nav-prev" class="px-5 py-3 text-slate-400 hover:text-white font-semibold text-sm transition-all disabled:opacity-0" disabled>
-                        ← Kembali
+                <div class="flex justify-between items-center bg-slate-900/40 backdrop-blur-xl border-2 border-indigo-500/20 p-4 rounded-none shadow-xl">
+                    <button id="nav-prev" class="px-5 py-3 text-slate-400 hover:text-white font-semibold text-sm transition-all disabled:opacity-0 font-mono">
+                        [ PREV_STEP ]
                     </button>
-                    <button id="nav-next" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-xl transition-all disabled:opacity-30 disabled:pointer-events-none" disabled>
-                        Lanjut →
+                    <button id="nav-next" class="px-6 py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm rounded-none transition-all disabled:opacity-30 disabled:pointer-events-none font-mono tracking-widest">
+                        NEXT_SEQUENCE >>
                     </button>
                 </div>
             </div>
         </div>
 
         <!-- Result Screen -->
-        <div id="result-screen" class="hidden opacity-0 max-w-2xl w-full bg-slate-900/60 backdrop-blur-xl border border-slate-800 p-8 md:p-16 rounded-3xl shadow-2xl text-center transition-all duration-500">
-            <img src="/the_tinkers.png" class="w-20 h-20 mx-auto mb-6 object-contain invert opacity-90" />
-            <h2 class="text-indigo-400 text-sm font-bold tracking-widest uppercase mb-2">Evaluasi Selesai</h2>
-            <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-8">HASIL EVALUASI</h1>
+        <div id="result-screen" class="hidden opacity-0 max-w-2xl w-full bg-slate-900/40 backdrop-blur-xl border-2 border-indigo-500/20 p-8 md:p-16 rounded-none shadow-2xl text-center transition-all duration-500 relative">
+            <div class="absolute top-4 left-4 text-[10px] text-indigo-500/40 font-mono">FIN_REPORT_V2.0</div>
+            <img src="/the_tinkers.png" class="w-20 h-20 mx-auto mb-6 object-contain opacity-90" />
+            <h2 class="text-indigo-400 text-sm font-bold tracking-[0.3em] uppercase mb-2 font-mono">Schematic Evaluated</h2>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-8 tracking-tighter">FINAL_OUTPUT</h1>
 
             <div class="grid grid-cols-3 gap-4 md:gap-6 mb-8 text-left">
-                <div class="bg-slate-950/50 border border-slate-800 p-5 rounded-2xl">
-                    <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Nama</p>
-                    <p id="final-operator" class="text-base font-bold text-white truncate">GUEST</p>
+                <div class="bg-slate-950/50 border border-indigo-500/20 p-5 rounded-none">
+                    <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-mono">ID_REF</p>
+                    <p id="final-operator" class="text-base font-bold text-white truncate font-mono">GUEST</p>
                 </div>
-                <div class="bg-slate-950/50 border border-slate-800 p-5 rounded-2xl">
-                    <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Akurasi</p>
-                    <p id="accuracy-val" class="text-lg md:text-xl font-bold text-emerald-400">0%</p>
+                <div class="bg-slate-950/50 border border-indigo-500/20 p-5 rounded-none">
+                    <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-mono">ACCURACY</p>
+                    <p id="accuracy-val" class="text-lg md:text-xl font-bold text-emerald-400 font-mono">0%</p>
                 </div>
-                <div class="bg-slate-950/50 border border-slate-800 p-5 rounded-2xl">
-                    <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Skor</p>
-                    <p id="final-score-val" class="text-lg md:text-xl font-bold text-indigo-400">0</p>
+                <div class="bg-slate-950/50 border border-indigo-500/20 p-5 rounded-none">
+                    <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-mono">SCORE_VAL</p>
+                    <p id="final-score-val" class="text-lg md:text-xl font-bold text-indigo-400 font-mono">0</p>
                 </div>
             </div>
 
-            <div class="bg-slate-950/50 border border-slate-800 py-6 px-8 rounded-2xl mb-10">
-                <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2">Rekomendasi Jabatan</p>
-                <h3 id="rank-title" class="text-xl md:text-2xl font-extrabold text-white tracking-wide uppercase">ANALYST</h3>
+            <div class="bg-slate-950/50 border border-indigo-500/20 py-6 px-8 rounded-none mb-10">
+                <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-mono">DESIGNATION_MATCH</p>
+                <h3 id="rank-title" class="text-xl md:text-2xl font-extrabold text-white tracking-[0.2em] uppercase font-mono">ANALYST</h3>
             </div>
 
-            <button id="restart-final" class="w-full md:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-2xl transition-all shadow-lg shadow-indigo-600/10">
-                Ulangi Kuis
+            <button id="restart-final" class="w-full md:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-none transition-all shadow-lg shadow-indigo-600/10 font-mono tracking-widest">
+                [ REBOOT_SYSTEM ]
             </button>
         </div>
 
     </div>
 </div>
 
-<script define:vars={{ safeSoalDatabase, SALT }}>
-    const soalDatabase = safeSoalDatabase;
+<script define:vars={{ SALT }}>
+    let soalDatabase = [];
     let activeQuestions = [];
     let currentIdx = 0;
     let userSelections = [];
     let isCorrectArray = [];
     let operatorName = "";
-    let proficiency = { 'IoT': 0, 'Game': 0, 'Web': 0, 'Logika': 0, 'Inovatif': 0 };
+    let timeLeft = 3600; // 1 jam dalam detik
+    let timerInterval = null;
 
     // DOM Elements
     const root = document.getElementById('hyper-container');
@@ -189,6 +181,41 @@ const safeSoalDatabase = soalDatabase.map(q => {
     const finalOperator = document.getElementById('final-operator');
     const mascotImg = document.getElementById('mascot-img');
     const bootingScreen = document.getElementById('booting-screen');
+    const countdownTimer = document.getElementById('countdown-timer');
+
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        timeLeft = 3600;
+        updateTimerDisplay();
+        
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                finish();
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        countdownTimer.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        
+        // Tambahkan warna peringatan jika waktu menipis
+        if (timeLeft <= 300) { // Sisa 5 menit
+            countdownTimer.classList.remove('text-white', 'text-amber-500');
+            countdownTimer.classList.add('text-red-500', 'animate-pulse');
+        } else if (timeLeft <= 900) { // Sisa 15 menit
+            countdownTimer.classList.remove('text-white', 'text-red-500', 'animate-pulse');
+            countdownTimer.classList.add('text-amber-500');
+        } else {
+            countdownTimer.classList.remove('text-red-500', 'animate-pulse', 'text-amber-500');
+            countdownTimer.classList.add('text-white');
+        }
+    }
     
     const questionText = document.getElementById('question-text');
     const optionsGrid = document.getElementById('options-grid');
@@ -253,54 +280,38 @@ const safeSoalDatabase = soalDatabase.map(q => {
         bootingScreen.classList.remove('hidden');
         setTimeout(() => bootingScreen.classList.add('opacity-100'), 50);
 
-        // Shuffle and choose 50 questions
-        const shuffled = [...soalDatabase].sort(() => Math.random() - 0.5);
-        const selected = shuffled.slice(0, 50);
-        const categoryOrder = ['IoT', 'Game', 'Web', 'Logika', 'Inovatif'];
-        activeQuestions = selected.sort((a, b) => categoryOrder.indexOf(a.category) - categoryOrder.indexOf(b.category));
-        
-        userSelections = new Array(activeQuestions.length).fill(null);
-        isCorrectArray = new Array(activeQuestions.length).fill(null);
-        currentIdx = 0;
-        operatorLabel.textContent = operatorName.toUpperCase();
+        try {
+            const response = await fetch('/api/questions');
+            if (!response.ok) throw new Error('Gagal mengambil soal');
+            activeQuestions = await response.json();
+            
+            userSelections = new Array(activeQuestions.length).fill(null);
+            isCorrectArray = new Array(activeQuestions.length).fill(null);
+            currentIdx = 0;
+            operatorLabel.textContent = operatorName.toUpperCase();
 
-        setTimeout(() => {
-            bootingScreen.classList.remove('opacity-100');
-            bootingScreen.classList.add('opacity-0');
             setTimeout(() => {
-                bootingScreen.classList.add('hidden');
-                introCard.classList.add('hidden');
-                quizInterface.classList.remove('hidden');
+                bootingScreen.classList.remove('opacity-100');
+                bootingScreen.classList.add('opacity-0');
                 setTimeout(() => {
-                    quizInterface.classList.remove('opacity-0');
-                    render();
-                }, 50);
-            }, 500);
-        }, 1200);
+                    bootingScreen.classList.add('hidden');
+                    introCard.classList.add('hidden');
+                    quizInterface.classList.remove('hidden');
+                    setTimeout(() => {
+                        quizInterface.classList.remove('opacity-0');
+                        startTimer();
+                        render();
+                    }, 50);
+                }, 500);
+            }, 1200);
+        } catch (error) {
+            console.error(error);
+            alert('Terjadi kesalahan teknis saat memuat soal. Silakan coba lagi.');
+            bootingScreen.classList.add('hidden');
+        }
     };
 
-    function updateStats() {
-        const statsContainer = document.getElementById('categories-stat');
-        if (!statsContainer) return;
-        statsContainer.innerHTML = '';
-        
-        const cats = ['IoT', 'Game', 'Web', 'Logika', 'Inovatif'];
-        cats.forEach(cat => {
-            const val = proficiency[cat] || 0;
-            const item = document.createElement('div');
-            item.className = 'space-y-1.5';
-            item.innerHTML = `
-                <div class="flex justify-between text-xs">
-                    <span class="font-bold text-slate-300">${cat}</span>
-                    <span class="font-semibold text-slate-400">${val}%</span>
-                </div>
-                <div class="h-1.5 w-full bg-slate-950 rounded-full overflow-hidden">
-                    <div class="h-full rounded-full transition-all duration-500" style="width: ${val}%; background-color: ${themeMap[cat].color}"></div>
-                </div>
-            `;
-            statsContainer.appendChild(item);
-        });
-    }
+    let typeTimeout = null;
 
     function render() {
         const q = activeQuestions[currentIdx];
@@ -313,36 +324,52 @@ const safeSoalDatabase = soalDatabase.map(q => {
         catBadge.textContent = `Kategori: ${q.category}`;
         currentNum.textContent = String(currentIdx + 1).padStart(2, '0');
         
-        // Escaping HTML characters via textContent for safety and clean render
-        questionText.textContent = q.question;
+        // Reactivity: Typing effect for question
+        if (typeTimeout) clearTimeout(typeTimeout);
+        questionText.textContent = '';
+        let i = 0;
+        const text = q.question;
+        function type() {
+            if (i < text.length) {
+                questionText.textContent += text.charAt(i);
+                i++;
+                typeTimeout = setTimeout(type, 15);
+            }
+        }
+        type();
         
-        const progress = Math.round((currentIdx / activeQuestions.length) * 100);
+        // Calculate and update progress based on answered questions
+        const answeredCount = userSelections.filter(x => x !== null).length;
+        const progress = Math.round((answeredCount / activeQuestions.length) * 100);
         progressBar.style.width = `${progress}%`;
-        progressPercent.textContent = `${progress}%`;
-
-        updateStats();
+        progressPercent.textContent = `${answeredCount} / ${activeQuestions.length} (${progress}%)`;
 
         optionsGrid.innerHTML = '';
-        q.options.forEach((opt, i) => {
+        q.options.forEach((opt, idx) => {
             const btn = document.createElement('button');
             const isSelected = userSelections[currentIdx] === opt;
             
-            btn.className = `group relative p-5 transition-all border rounded-2xl text-left overflow-hidden ${
+            // Reactivity: Staggered entry animation
+            btn.style.opacity = '0';
+            btn.style.transform = 'translateY(10px)';
+            btn.style.transition = `all 0.3s ease-out ${idx * 0.05}s`;
+            
+            btn.className = `group relative p-5 transition-all border-2 rounded-none text-left overflow-hidden ${
                 isSelected 
                 ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-600/30' 
-                : 'bg-slate-900/40 border-slate-800/80 text-slate-300 hover:border-slate-700 hover:bg-slate-900/60'
+                : 'bg-slate-900/40 border-indigo-500/20 text-slate-300 hover:border-indigo-500/50 hover:bg-slate-900/60 hover:translate-y-[-2px]'
             }`;
             
             btn.innerHTML = `
                 <div class="relative z-10 flex items-center space-x-4">
-                    <div class="w-8 h-8 rounded-lg border ${isSelected ? 'border-white/20 bg-white/10 text-white' : 'border-slate-800 bg-slate-950/50 text-slate-400'} flex items-center justify-center font-bold text-xs">
-                        ${String.fromCharCode(65 + i)}
+                    <div class="w-8 h-8 rounded-none border-2 ${isSelected ? 'border-white/20 bg-white/10 text-white' : 'border-indigo-500/30 bg-slate-950/50 text-indigo-400'} flex items-center justify-center font-bold text-xs font-mono">
+                        ${String.fromCharCode(65 + idx)}
                     </div>
-                    <span class="text-sm font-semibold tracking-wide flex-1 option-text"></span>
+                    <span class="text-sm font-semibold tracking-wide flex-1 option-text font-mono"></span>
                 </div>
+                <div class="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
             `;
             
-            // Set option text using textContent to prevent HTML tag parsing bug
             btn.querySelector('.option-text').textContent = opt;
             
             btn.onclick = async () => {
@@ -353,33 +380,39 @@ const safeSoalDatabase = soalDatabase.map(q => {
                 const isCorrect = hashedOpt === q.answerHash;
                 isCorrectArray[currentIdx] = isCorrect;
                 
-                // Recalculate proficiency based on current correct answers
-                proficiency = { 'IoT': 0, 'Game': 0, 'Web': 0, 'Logika': 0, 'Inovatif': 0 };
-                activeQuestions.forEach((question, idx) => {
-                    if (isCorrectArray[idx] === true) {
-                        proficiency[question.category] = (proficiency[question.category] || 0) + 10;
-                    }
-                });
-
-                render();
-                
-                setTimeout(() => {
-                    if (currentIdx < activeQuestions.length - 1) {
-                        currentIdx++;
-                        render();
-                    }
-                }, 200);
+                // Auto-advance logic (immediate)
+                if (currentIdx < activeQuestions.length - 1) {
+                    currentIdx++;
+                    render();
+                } else {
+                    // Jika soal terakhir, render sekali untuk menunjukkan pilihan terakhir lalu selesaikan
+                    render();
+                    finish();
+                }
             };
             optionsGrid.appendChild(btn);
+            
+            // Trigger animation
+            setTimeout(() => {
+                btn.style.opacity = '1';
+                btn.style.transform = 'translateY(0)';
+            }, 10);
         });
 
         prevBtn.disabled = currentIdx === 0;
         nextBtn.disabled = userSelections[currentIdx] === null;
     }
 
-    startBtn.disabled = true;
     nameInput?.addEventListener('input', (e) => {
-        operatorName = e.target.value.trim();
+        // Hanya izinkan huruf dan spasi
+        const val = e.target.value;
+        const filteredVal = val.replace(/[^a-zA-Z\s]/g, '');
+        
+        if (val !== filteredVal) {
+            e.target.value = filteredVal;
+        }
+        
+        operatorName = filteredVal.trim();
         startBtn.disabled = operatorName.length < 3;
     });
 
@@ -400,6 +433,7 @@ const safeSoalDatabase = soalDatabase.map(q => {
     };
 
     function finish() {
+        if (timerInterval) clearInterval(timerInterval);
         let score = 0;
         isCorrectArray.forEach(val => {
             if (val === true) score++;
@@ -414,8 +448,10 @@ const safeSoalDatabase = soalDatabase.map(q => {
             resultScreen.classList.remove('hidden');
             setTimeout(() => {
                 resultScreen.classList.remove('opacity-0');
-                finalScoreVal.textContent = score;
-                accuracyVal.textContent = `${accuracy}%`;
+                
+                // Count-up animation for score and accuracy
+                animateNumber(finalScoreVal, 0, score, 1500);
+                animateNumber(accuracyVal, 0, accuracy, 1500, '%');
                 
                 if (accuracy === 100) rankTitle.textContent = "THE SINGULARITY";
                 else if (accuracy >= 85) rankTitle.textContent = "GRAND OVERSEER";
@@ -423,6 +459,20 @@ const safeSoalDatabase = soalDatabase.map(q => {
                 else rankTitle.textContent = "PROTO NODE";
             }, 50);
         }, 500);
+    }
+
+    function animateNumber(el, start, end, duration, suffix = '') {
+        let startTime = null;
+        function step(timestamp) {
+            if (!startTime) startTime = timestamp;
+            const progress = Math.min((timestamp - startTime) / duration, 1);
+            const value = Math.floor(progress * (end - start) + start);
+            el.textContent = value + suffix;
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        }
+        window.requestAnimationFrame(step);
     }
 
     restartBtn.onclick = () => location.reload();
