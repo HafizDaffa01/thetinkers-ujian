@@ -1,6 +1,6 @@
 export interface Question {
   id: number;
-  category: 'IoT' | 'Web' | 'Game' | 'Logika' | 'Inovatif';
+  category: 'IoT' | 'Web' | 'Game' | 'Logika';
   question: string;
   options: string[];
   answer: string;
@@ -93,17 +93,5 @@ export const soalDatabase: Question[] = [
   { id: 77, category: 'Logika', question: "Lanjutkan pola: J, F, M, A, M, J, ...", options: ["J (Juli)", "A", "S", "O"], answer: "J (Juli)" },
   { id: 78, category: 'Logika', question: "Jika ada 12 ikan dan setengahnya tenggelam, berapa yang tersisa?", options: ["6", "12 (Ikan tidak tenggelam)", "0", "10"], answer: "12 (Ikan tidak tenggelam)" },
   { id: 79, category: 'Logika', question: "Apa yang penuh dengan lubang tapi masih bisa menampung air?", options: ["Ember bocor", "Spons", "Saringan", "Net"], answer: "Spons" },
-  { id: 80, category: 'Logika', question: "Jika kamu tidur jam 8 malam dan memasang alarm jam 9 pagi, berapa jam kamu tidur?", options: ["1 jam", "13 jam", "9 jam", "12 jam"], answer: "13 jam" },
-
-  // --- INOVATIF (10) ---
-  { id: 81, category: 'Inovatif', question: "Jika kamu diberi 1 baterai dan 1 motor DC, alat bantu apa yang paling inovatif untuk meja belajar?", options: ["Kipas pembersih debu penghapus", "Lampu sorot", "Speaker mini", "Hiasan putar"], answer: "Kipas pembersih debu penghapus" },
-  { id: 82, category: 'Inovatif', question: "Bagaimana cara memanfaatkan botol plastik bekas dan sensor LDR untuk membuat lampu taman otomatis?", options: ["Gunakan botol sebagai pelindung air dan LDR sebagai saklar cahaya", "Isi botol dengan air", "Jadikan botol sebagai tiang", "Bakar botol"], answer: "Gunakan botol sebagai pelindung air dan LDR sebagai saklar cahaya" },
-  { id: 83, category: 'Inovatif', question: "Kamu punya sensor getar yang sangat sensitif. Aplikasi apa yang paling berguna untuk keamanan rumah?", options: ["Deteksi gempa", "Alarm pendeteksi orang yang mencoba mencongkel jendela", "Pengukur langkah kaki", "Bel pintu"], answer: "Alarm pendeteksi orang yang mencoba mencongkel jendela" },
-  { id: 84, category: 'Inovatif', question: "Gunakan logika 'Game Dev' untuk membuat proses belajar sejarah jadi menarik. Ide apa yang terbaik?", options: ["Membaca buku", "Membuat game RPG di mana pemain adalah tokoh sejarah", "Menghafal tahun", "Ujian tertulis"], answer: "Membuat game RPG di mana pemain adalah tokoh sejarah" },
-  { id: 85, category: 'Inovatif', question: "Jika kamu bisa menggabungkan Web dan IoT untuk tanaman, fitur apa yang paling 'Smart'?", options: ["Web yang menampilkan foto tanaman", "Web yang bisa menyiram tanaman otomatis berdasarkan data kelembaban tanah", "Web daftar nama tanaman", "Web harga pupuk"], answer: "Web yang bisa menyiram tanaman otomatis berdasarkan data kelembaban tanah" },
-  { id: 86, category: 'Inovatif', question: "Kamu memiliki motor servo dan kardus bekas. Alat inovatif apa yang bisa dibuat untuk membantu orang malas?", options: ["Alat penekan saklar lampu otomatis via HP", "Kardus sepatu", "Tempat sampah", "Meja lipat"], answer: "Alat penekan saklar lampu otomatis via HP" },
-  { id: 87, category: 'Inovatif', question: "Bagaimana sensor ultrasonik bisa membantu penyandang tunanetra secara inovatif?", options: ["Sebagai pengukur tinggi badan", "Sebagai alat bantu deteksi halangan pada tongkat pintar (smart cane)", "Sebagai remote TV", "Sebagai radio"], answer: "Sebagai alat bantu deteksi halangan pada tongkat pintar (smart cane)" },
-  { id: 88, category: 'Inovatif', question: "Ide inovasi apa yang bisa menggabungkan 'Scratch' dan 'Pendidikan Lingkungan'?", options: ["Main game balapan", "Membuat simulasi interaktif tentang cara memilah sampah", "Nonton video", "Browsing berita"], answer: "Membuat simulasi interaktif tentang cara memilah sampah" },
-  { id: 89, category: 'Inovatif', question: "Jika kamu membuat website 'Creative Portfolio', fitur apa yang paling menonjolkan kemampuan teknis Tinkers?", options: ["Galeri foto", "Integrasi data real-time dari sensor IoT di rumah kamu", "Halaman 'Tentang Saya'", "Formulir kontak"], answer: "Integrasi data real-time dari sensor IoT di rumah kamu" },
-  { id: 90, category: 'Inovatif', question: "Kamu memiliki modul Bluetooth dan LED RGB. Inovasi apa untuk suasana kamar?", options: ["Senter", "Lampu tidur yang warnanya bisa diubah sesuai mood lewat HP", "Lampu baca", "Indikator baterai"], answer: "Lampu tidur yang warnanya bisa diubah sesuai mood lewat HP" }
+  { id: 80, category: 'Logika', question: "Jika kamu tidur jam 8 malam dan memasang alarm jam 9 pagi, berapa jam kamu tidur?", options: ["1 jam", "13 jam", "9 jam", "12 jam"], answer: "13 jam" }
 ];

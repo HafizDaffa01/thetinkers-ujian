@@ -3,26 +3,20 @@ import crypto from 'node:crypto';
 
 export const prerender = false; // Ensure this is evaluated at request time
 
-const SALT = "tinkers_sec_2026_salt";
+const SALT = import.meta.env.QUIZ_SALT || "fallback_salt";
 
 export async function GET() {
   // Shuffle and pick 50 questions
   const shuffled = [...soalDatabase].sort(() => Math.random() - 0.5);
   const selected = shuffled.slice(0, 50);
 
-  // Map to safe format (no plain text answers)
+  // Map to safe format (NO ANSWERS, NO HASHES - Browser doesn't need to check anything)
   const safeQuestions = selected.map(q => {
-    const hash = crypto
-      .createHash('sha256')
-      .update(`${q.id}-${q.answer}-${SALT}`)
-      .digest('hex');
-      
     return {
       id: q.id,
       category: q.category,
       question: q.question,
-      options: q.options,
-      answerHash: hash
+      options: q.options
     };
   });
 

@@ -2,8 +2,11 @@
 const SALT = "tinkers_sec_2026_salt";
 ---
 
-<div id="hyper-container" class="min-h-screen bg-[#090d16] text-slate-100 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden">
+<div id="hyper-container" class="min-h-screen bg-[#090d16] text-slate-100 selection:bg-indigo-500 selection:text-white relative overflow-x-hidden select-none">
     
+    <!-- Hidden Exit Button (Top Right) -->
+    <div id="hidden-exit" class="fixed top-0 right-0 w-16 h-16 z-[100] cursor-default"></div>
+
     <!-- Blueprint Schematic Background -->
     <div class="fixed inset-0 z-0 pointer-events-none opacity-20">
         <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:40px_40px]"></div>
@@ -37,12 +40,14 @@ const SALT = "tinkers_sec_2026_salt";
                         type="text" 
                         id="user-name" 
                         placeholder="MASUKKAN NAMA..." 
+                        autocomplete="off"
+                        spellcheck="false"
                         class="w-full bg-slate-950/40 border-2 border-dashed border-indigo-500/30 focus:border-indigo-500 focus:ring-0 rounded-none px-5 py-4 text-white text-2xl font-black transition-all placeholder:text-slate-700 outline-none text-center tracking-tighter uppercase font-mono"
                     />
                 </div>
                 
                 <button id="start-btn" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-2xl transition-all duration-300 transform active:scale-[0.98] shadow-lg shadow-indigo-600/20 disabled:opacity-30 disabled:pointer-events-none" disabled>
-                    Mulai Ujian
+                    Mulai Test
                 </button>
             </div>
         </div>
@@ -131,25 +136,19 @@ const SALT = "tinkers_sec_2026_salt";
             <h2 class="text-indigo-400 text-sm font-bold tracking-[0.3em] uppercase mb-2 font-mono">Schematic Evaluated</h2>
             <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-8 tracking-tighter">FINAL_OUTPUT</h1>
 
-            <div class="grid grid-cols-3 gap-4 md:gap-6 mb-8 text-left">
-                <div class="bg-slate-950/50 border border-indigo-500/20 p-5 rounded-none">
-                    <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-mono">ID_REF</p>
-                    <p id="final-operator" class="text-base font-bold text-white truncate font-mono">GUEST</p>
-                </div>
-                <div class="bg-slate-950/50 border border-indigo-500/20 p-5 rounded-none">
-                    <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-mono">ACCURACY</p>
-                    <p id="accuracy-val" class="text-lg md:text-xl font-bold text-emerald-400 font-mono">0%</p>
-                </div>
-                <div class="bg-slate-950/50 border border-indigo-500/20 p-5 rounded-none">
-                    <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-mono">SCORE_VAL</p>
-                    <p id="final-score-val" class="text-lg md:text-xl font-bold text-indigo-400 font-mono">0</p>
-                </div>
+        <div class="grid grid-cols-1 gap-4 md:gap-6 mb-8 text-left">
+            <div class="bg-slate-950/50 border border-indigo-500/20 p-5 rounded-none">
+                <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-mono">ID_REF</p>
+                <p id="final-operator" class="text-base font-bold text-white truncate font-mono">GUEST</p>
             </div>
+            <!-- Score and Accuracy hidden as per request -->
+        </div>
 
-            <div class="bg-slate-950/50 border border-indigo-500/20 py-6 px-8 rounded-none mb-10">
-                <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-mono">DESIGNATION_MATCH</p>
-                <h3 id="rank-title" class="text-xl md:text-2xl font-extrabold text-white tracking-[0.2em] uppercase font-mono">ANALYST</h3>
-            </div>
+        <div class="bg-slate-950/50 border border-indigo-500/20 py-8 px-8 rounded-none mb-10">
+            <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-2 font-mono">STATUS</p>
+            <h3 id="rank-title" class="text-xl md:text-2xl font-extrabold text-emerald-400 tracking-[0.2em] uppercase font-mono">SUBMITTED</h3>
+            <p class="text-slate-400 mt-4 text-sm font-mono">Terima kasih telah mengikuti seleksi. Data Anda telah berhasil masuk ke sistem kami. Semoga berhasil!</p>
+        </div>
 
             <button id="restart-final" class="w-full md:w-auto px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-none transition-all shadow-lg shadow-indigo-600/10 font-mono tracking-widest">
                 [ REBOOT_SYSTEM ]
@@ -157,14 +156,43 @@ const SALT = "tinkers_sec_2026_salt";
         </div>
 
     </div>
+
+    <!-- Fullscreen Blocker Overlay -->
+    <div id="fullscreen-blocker" class="fixed inset-0 z-[200] bg-slate-950 flex flex-col items-center justify-center hidden">
+        <div class="text-center p-8 border-2 border-red-500/50 bg-red-500/5 max-w-md">
+            <h2 class="text-2xl font-black text-white mb-4 font-mono tracking-tighter">KIOSK_PROTECTION_ACTIVE</h2>
+            <p class="text-slate-400 mb-8 font-mono text-sm">Akses ujian dihentikan sementara. Browser harus berada dalam mode layar penuh untuk melanjutkan.</p>
+            <button id="resume-fullscreen" class="px-10 py-4 bg-red-600 hover:bg-red-500 text-white font-bold font-mono tracking-widest transition-all">
+                RESUME_FULLSCREEN
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom Modal Overlay -->
+    <div id="custom-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/80 backdrop-blur-md hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-slate-900 border-2 border-indigo-500/30 p-8 max-w-md w-full mx-4 relative">
+            <div class="absolute -top-1 -left-1 w-3 h-3 border-l-2 border-t-2 border-indigo-500"></div>
+            <div class="absolute -bottom-1 -right-1 w-3 h-3 border-r-2 border-b-2 border-indigo-500"></div>
+            
+            <h3 id="modal-title" class="text-xl font-bold text-white mb-4 font-mono tracking-tight">SYSTEM_MESSAGE</h3>
+            <p id="modal-message" class="text-slate-300 mb-8 font-mono text-sm leading-relaxed"></p>
+            
+            <div id="modal-actions" class="flex justify-end space-x-4">
+                <button id="modal-cancel" class="px-6 py-2 border border-slate-700 text-slate-400 hover:bg-slate-800 font-mono text-xs uppercase tracking-widest transition-all">Cancel</button>
+                <button id="modal-confirm" class="px-6 py-2 bg-indigo-600 text-white hover:bg-indigo-500 font-mono text-xs uppercase tracking-widest transition-all">Confirm</button>
+            </div>
+        </div>
+    </div>
 </div>
 
-<script define:vars={{ SALT }}>
+<script>
+    import { supabase } from '../lib/supabase';
+
+    const SALT = "tinkers_sec_2026_salt"; // Not needed anymore but kept for initial variable compatibility
     let soalDatabase = [];
     let activeQuestions = [];
     let currentIdx = 0;
     let userSelections = [];
-    let isCorrectArray = [];
     let operatorName = "";
     let timeLeft = 3600; // 1 jam dalam detik
     let timerInterval = null;
@@ -182,6 +210,125 @@ const SALT = "tinkers_sec_2026_salt";
     const mascotImg = document.getElementById('mascot-img');
     const bootingScreen = document.getElementById('booting-screen');
     const countdownTimer = document.getElementById('countdown-timer');
+    const customModal = document.getElementById('custom-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalMessage = document.getElementById('modal-message');
+    const modalConfirmBtn = document.getElementById('modal-confirm');
+    const modalCancelBtn = document.getElementById('modal-cancel');
+    const hiddenExit = document.getElementById('hidden-exit');
+    const fsBlocker = document.getElementById('fullscreen-blocker');
+    const resumeFsBtn = document.getElementById('resume-fullscreen');
+
+    let isQuizActive = false;
+    let cheatCount = 0;
+    let idleTimer = null;
+    let exitClicks = 0;
+    let exitClickTimer = null;
+
+    resumeFsBtn.onclick = async () => {
+        await enterKioskMode();
+    };
+
+    function checkFullscreen() {
+        if (isQuizActive) {
+            if (!document.fullscreenElement) {
+                fsBlocker.classList.remove('hidden');
+            } else {
+                fsBlocker.classList.add('hidden');
+            }
+        }
+    }
+
+    // Anti-Cheat: Focus & Visibility detection
+    window.addEventListener('blur', () => {
+        if (isQuizActive) {
+            cheatCount++;
+            showModal({
+                title: "CHEAT_DETECTION_WARNING",
+                message: `Peringatan ${cheatCount}: Anda dilarang mengganti tab atau memindahkan fokus browser selama ujian berlangsung. Pelanggaran akan dicatat dalam sistem.`,
+            });
+        }
+    });
+
+    // Anti-Cheat: Prevent escaping fullscreen
+    document.addEventListener('fullscreenchange', checkFullscreen);
+
+    // Backup check every 100ms for aggressive enforcement
+    setInterval(checkFullscreen, 100);
+
+    // --- IDLE TIMEOUT LOGIC ---
+    function resetIdleTimer() {
+        if (!isQuizActive) return;
+        if (idleTimer) clearTimeout(idleTimer);
+        
+        idleTimer = setTimeout(() => {
+            showModal({
+                title: "IDLE_TIMEOUT_RESET",
+                message: "Sistem mendeteksi tidak ada aktivitas selama 45 detik. Ujian akan di-reset untuk keamanan.",
+                onConfirm: () => location.reload()
+            });
+            setTimeout(() => { if (isQuizActive) location.reload(); }, 5000);
+        }, 45000);
+    }
+
+    ['mousedown', 'mousemove', 'keydown', 'scroll', 'touchstart'].forEach(evt => {
+        document.addEventListener(evt, resetIdleTimer, true);
+    });
+
+    // --- HIDDEN EXIT LOGIC ---
+    hiddenExit.onclick = () => {
+        exitClicks++;
+        if (exitClickTimer) clearTimeout(exitClickTimer);
+        exitClickTimer = setTimeout(() => { exitClicks = 0; }, 2000);
+
+        if (exitClicks >= 5) {
+            exitKioskMode();
+            isQuizActive = false;
+            fsBlocker.classList.add('hidden'); // Ensure blocker is gone on exit
+            showModal({ title: "SYSTEM_EXIT", message: "Mode Kiosk dinonaktifkan via Hidden Exit." });
+            exitClicks = 0;
+        }
+    };
+
+    function showModal({ title, message, showCancel = false, onConfirm, onCancel }) {
+        modalTitle.textContent = title || "SYSTEM_MESSAGE";
+        modalMessage.textContent = message;
+        modalCancelBtn.classList.toggle('hidden', !showCancel);
+        
+        customModal.classList.remove('hidden');
+        setTimeout(() => customModal.classList.add('opacity-100'), 10);
+
+        const cleanup = () => {
+            customModal.classList.remove('opacity-100');
+            setTimeout(() => customModal.classList.add('hidden'), 300);
+        };
+
+        modalConfirmBtn.onclick = () => {
+            cleanup();
+            if (onConfirm) onConfirm();
+        };
+
+        modalCancelBtn.onclick = () => {
+            cleanup();
+            if (onCancel) onCancel();
+        };
+    }
+
+    async function enterKioskMode() {
+        try {
+            if (document.documentElement.requestFullscreen) {
+                await document.documentElement.requestFullscreen();
+            }
+        } catch (err) {
+            console.error("Error entering fullscreen:", err);
+        }
+    }
+
+    function exitKioskMode() {
+        if (document.fullscreenElement && document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
 
     function startTimer() {
         if (timerInterval) clearInterval(timerInterval);
@@ -234,35 +381,30 @@ const SALT = "tinkers_sec_2026_salt";
         'IoT': { color: '#06b6d4', text: 'text-cyan-400' },
         'Game': { color: '#a855f7', text: 'text-purple-400' },
         'Web': { color: '#10b981', text: 'text-emerald-400' },
-        'Logika': { color: '#6366f1', text: 'text-indigo-400' },
-        'Inovatif': { color: '#f59e0b', text: 'text-amber-400' }
+        'Logika': { color: '#6366f1', text: 'text-indigo-400' }
     };
 
     const mascotMap = {
         'IoT': '/m_iot.png',
         'Web': '/m_web.png',
         'Game': '/m_game.png',
-        'Logika': '/the_tinkers.png',
-        'Inovatif': '/the_tinkers.png'
+        'Logika': '/the_tinkers.png'
     };
-
-    // Secure browser hashing using SubtleCrypto API
-    async function sha256(message) {
-        const msgBuffer = new TextEncoder().encode(message);
-        const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
-        const hashArray = Array.from(new Uint8Array(hashBuffer));
-        return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    }
 
     // DevTools & Cheat Protection - Keyboard and Context Menu Disabler
     function initSecurity() {
         // 1. Disable context menu (right click)
         document.addEventListener('contextmenu', e => e.preventDefault());
 
-        // 2. Disable devtools shortcut keys (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C, Ctrl+U)
+        // 2. Disable devtools & navigation shortcut keys
         document.addEventListener('keydown', e => {
             if (
                 e.key === 'F12' || 
+                e.key === 'F5' ||
+                e.key === 'F11' ||
+                e.key === 'Escape' ||
+                e.key === 'Meta' ||
+                (e.ctrlKey && (e.key === 'r' || e.key === 'R')) ||
                 (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.key === 'J' || e.key === 'j' || e.key === 'C' || e.key === 'c')) ||
                 (e.ctrlKey && (e.key === 'U' || e.key === 'u'))
             ) {
@@ -277,6 +419,10 @@ const SALT = "tinkers_sec_2026_salt";
 
     startBtn.onclick = async () => {
         if (!operatorName) return;
+        
+        // Request Kiosk Mode (Fullscreen)
+        await enterKioskMode();
+        
         bootingScreen.classList.remove('hidden');
         setTimeout(() => bootingScreen.classList.add('opacity-100'), 50);
 
@@ -286,7 +432,6 @@ const SALT = "tinkers_sec_2026_salt";
             activeQuestions = await response.json();
             
             userSelections = new Array(activeQuestions.length).fill(null);
-            isCorrectArray = new Array(activeQuestions.length).fill(null);
             currentIdx = 0;
             operatorLabel.textContent = operatorName.toUpperCase();
 
@@ -299,6 +444,7 @@ const SALT = "tinkers_sec_2026_salt";
                     quizInterface.classList.remove('hidden');
                     setTimeout(() => {
                         quizInterface.classList.remove('opacity-0');
+                        isQuizActive = true;
                         startTimer();
                         render();
                     }, 50);
@@ -306,7 +452,7 @@ const SALT = "tinkers_sec_2026_salt";
             }, 1200);
         } catch (error) {
             console.error(error);
-            alert('Terjadi kesalahan teknis saat memuat soal. Silakan coba lagi.');
+            showModal({ title: "TECHNICAL_ERROR", message: "Gagal memuat soal. Silakan refresh halaman." });
             bootingScreen.classList.add('hidden');
         }
     };
@@ -375,11 +521,6 @@ const SALT = "tinkers_sec_2026_salt";
             btn.onclick = async () => {
                 userSelections[currentIdx] = opt;
                 
-                // Securely check if option is correct
-                const hashedOpt = await sha256(`${q.id}-${opt}-${SALT}`);
-                const isCorrect = hashedOpt === q.answerHash;
-                isCorrectArray[currentIdx] = isCorrect;
-                
                 // Auto-advance logic (immediate)
                 if (currentIdx < activeQuestions.length - 1) {
                     currentIdx++;
@@ -432,35 +573,64 @@ const SALT = "tinkers_sec_2026_salt";
         }
     };
 
-    function finish() {
-        if (timerInterval) clearInterval(timerInterval);
-        let score = 0;
-        isCorrectArray.forEach(val => {
-            if (val === true) score++;
+    let isSubmitting = false;
+
+    async function finish() {
+        if (isSubmitting) return; // Prevent multiple modal opens
+
+        const timeElapsed = 3600 - timeLeft;
+        const isTooFast = timeElapsed < 600;
+
+        showModal({
+            title: isTooFast ? "FAST_COMPLETION_WARNING" : "SUBMISSION_CONFIRMATION",
+            message: isTooFast 
+                ? "Sistem mendeteksi Anda mengerjakan kuis dengan sangat cepat. Pastikan semua jawaban sudah benar. Tetap selesaikan sekarang?"
+                : "Apakah Anda yakin ingin menyelesaikan kuis dan mengirimkan jawaban?",
+            showCancel: true,
+            onConfirm: async () => {
+                if (isSubmitting) return; // Guard against rapid clicks on confirm button
+                isSubmitting = true;
+                
+                isQuizActive = false;
+                exitKioskMode();
+                
+                if (timerInterval) clearInterval(timerInterval);
+                finalOperator.textContent = operatorName.toUpperCase();
+
+                // Submit to Server-Side API
+                try {
+                    const response = await fetch('/api/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            operatorName,
+                            userSelections,
+                            activeQuestionIds: activeQuestions.map(q => q.id),
+                            cheatCount
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    if (!result.success) throw new Error(result.error);
+                    console.log("Data submitted successfully to server");
+                } catch (err) {
+                    console.error("Error submitting data:", err);
+                    showModal({ title: "SUBMISSION_ERROR", message: "Gagal mengirim jawaban. Silakan hubungi admin." });
+                    isSubmitting = false; // Allow retry on error
+                    return;
+                }
+                
+                quizInterface.classList.add('opacity-0');
+                setTimeout(() => {
+                    quizInterface.classList.add('hidden');
+                    resultScreen.classList.remove('hidden');
+                    setTimeout(() => {
+                        resultScreen.classList.remove('opacity-0');
+                    }, 50);
+                }, 500);
+            }
         });
-
-        const accuracy = Math.round((score / activeQuestions.length) * 100);
-        finalOperator.textContent = operatorName.toUpperCase();
-        
-        quizInterface.classList.add('opacity-0');
-        setTimeout(() => {
-            quizInterface.classList.add('hidden');
-            resultScreen.classList.remove('hidden');
-            setTimeout(() => {
-                resultScreen.classList.remove('opacity-0');
-                
-                // Count-up animation for score and accuracy
-                animateNumber(finalScoreVal, 0, score, 1500);
-                animateNumber(accuracyVal, 0, accuracy, 1500, '%');
-                
-                if (accuracy === 100) rankTitle.textContent = "THE SINGULARITY";
-                else if (accuracy >= 85) rankTitle.textContent = "GRAND OVERSEER";
-                else if (accuracy >= 60) rankTitle.textContent = "SYSTEM ELITE";
-                else rankTitle.textContent = "PROTO NODE";
-            }, 50);
-        }, 500);
     }
-
     function animateNumber(el, start, end, duration, suffix = '') {
         let startTime = null;
         function step(timestamp) {
